@@ -41,6 +41,9 @@ type SMTP struct {
 	Password         string    `json:"password,omitempty"`
 	FromAddress      string    `json:"from_address"`
 	IgnoreCertErrors bool      `json:"ignore_cert_errors"`
+	UseSSL           bool      `json:"use_ssl"`
+	ForceTLS         bool      `json:"force_tls"`
+	AllowUnsafeAuth  bool      `json:"allow_insecure_auth"`
 	Headers          []Header  `json:"headers"`
 	ModifiedDate     time.Time `json:"modified_date"`
 }
@@ -129,6 +132,11 @@ func (s *SMTP) GetDialer() (mailer.Dialer, error) {
 		ServerName:         host,
 		InsecureSkipVerify: s.IgnoreCertErrors,
 	}
+	if s.UseSSL {
+		d.SSL = true
+	}
+	d.ForceTLS = s.ForceTLS
+	d.AllowInsecureAuth = s.AllowUnsafeAuth
 	hostname, err := os.Hostname()
 	if err != nil {
 		log.Error(err)

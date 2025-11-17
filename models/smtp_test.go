@@ -99,6 +99,54 @@ func (s *ModelsSuite) TestSMTPGetDialer(ch *check.C) {
 	ch.Assert(dialer.TLSConfig.InsecureSkipVerify, check.Equals, smtp.IgnoreCertErrors)
 }
 
+func (s *ModelsSuite) TestSMTPGetDialerUseSSL(ch *check.C) {
+	host := "localhost"
+	port := 25
+	smtp := SMTP{
+		Host:   fmt.Sprintf("%s:%d", host, port),
+		UseSSL: true,
+	}
+	d, err := smtp.GetDialer()
+	ch.Assert(err, check.Equals, nil)
+
+	dialer := d.(*Dialer).Dialer
+	ch.Assert(dialer.Host, check.Equals, host)
+	ch.Assert(dialer.Port, check.Equals, port)
+	ch.Assert(dialer.SSL, check.Equals, true)
+}
+
+func (s *ModelsSuite) TestSMTPGetDialerForceTLS(ch *check.C) {
+	host := "localhost"
+	port := 25
+	smtp := SMTP{
+		Host:     fmt.Sprintf("%s:%d", host, port),
+		ForceTLS: true,
+	}
+	d, err := smtp.GetDialer()
+	ch.Assert(err, check.Equals, nil)
+
+	dialer := d.(*Dialer).Dialer
+	ch.Assert(dialer.Host, check.Equals, host)
+	ch.Assert(dialer.Port, check.Equals, port)
+	ch.Assert(dialer.ForceTLS, check.Equals, true)
+}
+
+func (s *ModelsSuite) TestSMTPGetDialerAllowUnsafeAuth(ch *check.C) {
+	host := "localhost"
+	port := 25
+	smtp := SMTP{
+		Host:            fmt.Sprintf("%s:%d", host, port),
+		AllowUnsafeAuth: true,
+	}
+	d, err := smtp.GetDialer()
+	ch.Assert(err, check.Equals, nil)
+
+	dialer := d.(*Dialer).Dialer
+	ch.Assert(dialer.Host, check.Equals, host)
+	ch.Assert(dialer.Port, check.Equals, port)
+	ch.Assert(dialer.AllowInsecureAuth, check.Equals, true)
+}
+
 func (s *ModelsSuite) TestGetInvalidSMTP(ch *check.C) {
 	_, err := GetSMTP(-1, 1)
 	ch.Assert(err, check.Equals, gorm.ErrRecordNotFound)

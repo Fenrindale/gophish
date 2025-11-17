@@ -61,6 +61,21 @@
                         <label class="control-label" for="password">Password:</label>
                         <input type="password" class="form-control" placeholder="Password" id="password" />
                         <div class="checkbox checkbox-primary">
+                            <input id="use_ssl" type="checkbox">
+                            <label for="use_ssl">Connect using SSL/TLS immediately (implicit TLS) <i class="fa fa-question-circle"
+                                    data-toggle="tooltip" data-placement="right" title="Enable this when your SMTP server expects TLS as soon as the socket is opened (for example, SMTPS on ports such as 465 or 425)."></i></label>
+                        </div>
+                        <div class="checkbox checkbox-primary">
+                            <input id="force_tls" type="checkbox">
+                            <label for="force_tls">Force STARTTLS even if not advertised <i class="fa fa-question-circle"
+                                    data-toggle="tooltip" data-placement="right" title="Some SMTP servers require STARTTLS but don't list it in EHLO. Enable this to send the STARTTLS command anyway."></i></label>
+                        </div>
+                        <div class="checkbox checkbox-primary">
+                            <input id="allow_insecure_auth" type="checkbox">
+                            <label for="allow_insecure_auth">Allow insecure AUTH (PLAIN/LOGIN without TLS) <i class="fa fa-question-circle"
+                                    data-toggle="tooltip" data-placement="right" title="Enable only if your server insists on AUTH PLAIN or LOGIN before TLS. Credentials will be sent in cleartext."></i></label>
+                        </div>
+                        <div class="checkbox checkbox-primary">
                             <input id="ignore_cert_errors" type="checkbox" checked>
                             <label for="ignore_cert_errors">Ignore Certificate Errors <i class="fa fa-question-circle"
                                     data-toggle="tooltip" data-placement="right" title="Ignore common certificate errors such as self-signed certs (exposes you to MiTM attacks - use carefully!)"></i></label>

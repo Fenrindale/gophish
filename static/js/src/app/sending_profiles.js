@@ -21,6 +21,9 @@ function sendTestEmail() {
             host: $("#host").val(),
             username: $("#username").val(),
             password: $("#password").val(),
+            use_ssl: $("#use_ssl").prop("checked"),
+            force_tls: $("#force_tls").prop("checked"),
+            allow_insecure_auth: $("#allow_insecure_auth").prop("checked"),
             ignore_cert_errors: $("#ignore_cert_errors").prop("checked"),
             headers: headers,
         }
@@ -58,6 +61,9 @@ function save(idx) {
     profile.host = $("#host").val()
     profile.username = $("#username").val()
     profile.password = $("#password").val()
+    profile.use_ssl = $("#use_ssl").prop("checked")
+    profile.force_tls = $("#force_tls").prop("checked")
+    profile.allow_insecure_auth = $("#allow_insecure_auth").prop("checked")
     profile.ignore_cert_errors = $("#ignore_cert_errors").prop("checked")
     if (idx != -1) {
         profile.id = profiles[idx].id
@@ -92,6 +98,9 @@ function dismiss() {
     $("#host").val("")
     $("#username").val("")
     $("#password").val("")
+    $("#use_ssl").prop("checked", false)
+    $("#force_tls").prop("checked", false)
+    $("#allow_insecure_auth").prop("checked", false)
     $("#ignore_cert_errors").prop("checked", true)
     $("#headersTable").dataTable().DataTable().clear().draw()
     $("#modal").modal('hide')
@@ -161,6 +170,9 @@ function edit(idx) {
         $("#host").val(profile.host)
         $("#username").val(profile.username)
         $("#password").val(profile.password)
+        $("#use_ssl").prop("checked", !!profile.use_ssl)
+        $("#force_tls").prop("checked", !!profile.force_tls)
+        $("#allow_insecure_auth").prop("checked", !!profile.allow_insecure_auth)
         $("#ignore_cert_errors").prop("checked", profile.ignore_cert_errors)
         $.each(profile.headers, function (i, record) {
             addCustomHeader(record.key, record.value)
@@ -182,6 +194,9 @@ function copy(idx) {
     $("#host").val(profile.host)
     $("#username").val(profile.username)
     $("#password").val(profile.password)
+    $("#use_ssl").prop("checked", !!profile.use_ssl)
+    $("#force_tls").prop("checked", !!profile.force_tls)
+    $("#allow_insecure_auth").prop("checked", !!profile.allow_insecure_auth)
     $("#ignore_cert_errors").prop("checked", profile.ignore_cert_errors)
 }
 
