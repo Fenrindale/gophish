@@ -32,20 +32,20 @@ func (d *Dialer) Dial() (mailer.Sender, error) {
 
 // SMTP contains the attributes needed to handle the sending of campaign emails
 type SMTP struct {
-	Id               int64     `json:"id" gorm:"column:id; primary_key:yes"`
-	UserId           int64     `json:"-" gorm:"column:user_id"`
-	Interface        string    `json:"interface_type" gorm:"column:interface_type"`
-	Name             string    `json:"name"`
-	Host             string    `json:"host"`
-	Username         string    `json:"username,omitempty"`
-	Password         string    `json:"password,omitempty"`
-	FromAddress      string    `json:"from_address"`
-	IgnoreCertErrors bool      `json:"ignore_cert_errors"`
-	UseSSL           bool      `json:"use_ssl"`
-	ForceTLS         bool      `json:"force_tls"`
-	AllowUnsafeAuth  bool      `json:"allow_insecure_auth"`
-	Headers          []Header  `json:"headers"`
-	ModifiedDate     time.Time `json:"modified_date"`
+	Id                int64     `json:"id" gorm:"column:id; primary_key:yes"`
+	UserId            int64     `json:"-" gorm:"column:user_id"`
+	Interface         string    `json:"interface_type" gorm:"column:interface_type"`
+	Name              string    `json:"name"`
+	Host              string    `json:"host"`
+	Username          string    `json:"username,omitempty"`
+	Password          string    `json:"password,omitempty"`
+	FromAddress       string    `json:"from_address"`
+	IgnoreCertErrors  bool      `json:"ignore_cert_errors"`
+	UseSSL            bool      `json:"use_ssl"`
+	ForceTLS          bool      `json:"force_tls"`
+	AllowInsecureAuth bool      `json:"allow_insecure_auth"`
+	Headers           []Header  `json:"headers"`
+	ModifiedDate      time.Time `json:"modified_date"`
 }
 
 // Header contains the fields and methods for a sending profile to have
@@ -136,7 +136,7 @@ func (s *SMTP) GetDialer() (mailer.Dialer, error) {
 		d.SSL = true
 	}
 	d.ForceTLS = s.ForceTLS
-	d.AllowInsecureAuth = s.AllowUnsafeAuth
+	d.AllowInsecureAuth = s.AllowInsecureAuth
 	hostname, err := os.Hostname()
 	if err != nil {
 		log.Error(err)

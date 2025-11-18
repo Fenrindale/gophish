@@ -131,12 +131,12 @@ func (s *ModelsSuite) TestSMTPGetDialerForceTLS(ch *check.C) {
 	ch.Assert(dialer.ForceTLS, check.Equals, true)
 }
 
-func (s *ModelsSuite) TestSMTPGetDialerAllowUnsafeAuth(ch *check.C) {
+func (s *ModelsSuite) TestSMTPGetDialerAllowInsecureAuth(ch *check.C) {
 	host := "localhost"
 	port := 25
 	smtp := SMTP{
-		Host:            fmt.Sprintf("%s:%d", host, port),
-		AllowUnsafeAuth: true,
+		Host:              fmt.Sprintf("%s:%d", host, port),
+		AllowInsecureAuth: true,
 	}
 	d, err := smtp.GetDialer()
 	ch.Assert(err, check.Equals, nil)
